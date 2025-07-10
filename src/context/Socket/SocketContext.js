@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import openSocket from "socket.io-client";
-import jwt_decode from "jwt-decode";
+import jwt from "jsonwebtoken";
 
 class ManagedSocket {
   constructor(socketManager) {
@@ -100,7 +100,8 @@ const SocketManager = {
       }
 
       let token = JSON.parse(localStorage.getItem("token"));
-      const { exp } = jwt_decode(token) ?? {};
+      const { exp } = jwt.decode(token) ?? {};
+
       if (Date.now() >= exp * 1000) {
         console.warn("Expired token, reload after refresh");
         setTimeout(() => {
@@ -128,7 +129,7 @@ const SocketManager = {
         if (reason.startsWith("io ")) {
           console.warn("tryng to reconnect", this.currentSocket);
 
-          const { exp } = jwt_decode(token) ?? {};
+          const { exp } = jwt.decode(token);
           if (Date.now() - 180 >= exp * 1000) {
             console.warn("Expired token, reloading app");
             window.location.reload();
