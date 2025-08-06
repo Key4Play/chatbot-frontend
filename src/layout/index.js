@@ -32,15 +32,15 @@ import { i18n } from "../translate/i18n";
 import toastError from "../errors/toastError";
 import AnnouncementsPopover from "../components/AnnouncementsPopover";
 
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.svg";
 import { SocketContext } from "../context/Socket/SocketContext";
 import ChatPopover from "../pages/Chat/ChatPopover";
 
 import { useDate } from "../hooks/useDate";
 
 import ColorModeContext from "../layout/themeContext";
-import Brightness4Icon from '@material-ui/icons/Brightness4';
-import Brightness7Icon from '@material-ui/icons/Brightness7';
+import Brightness4Icon from "@material-ui/icons/Brightness4";
+import Brightness7Icon from "@material-ui/icons/Brightness7";
 import LanguageControl from "../components/LanguageControl";
 import { LanguageOutlined } from "@material-ui/icons";
 
@@ -54,15 +54,16 @@ const useStyles = makeStyles((theme) => ({
       height: "calc(100vh - 56px)",
     },
     backgroundColor: theme.palette.fancyBackground,
-    '& .MuiButton-outlinedPrimary': {
-      color: theme.mode === 'light' ? '#FFF' : '#FFF',
-	  //backgroundColor: theme.mode === 'light' ? '#682ee2' : '#682ee2',
-	backgroundColor: theme.mode === 'light' ? theme.palette.primary.main : '#1c1c1c',
+    "& .MuiButton-outlinedPrimary": {
+      color: theme.mode === "light" ? "#FFF" : "#FFF",
+      //backgroundColor: theme.mode === 'light' ? '#682ee2' : '#682ee2',
+      backgroundColor:
+        theme.mode === "light" ? theme.palette.primary.main : "#1c1c1c",
       //border: theme.mode === 'light' ? '1px solid rgba(0 124 102)' : '1px solid rgba(255, 255, 255, 0.5)',
     },
-    '& .MuiTab-textColorPrimary.Mui-selected': {
-      color: theme.mode === 'light' ? 'Primary' : '#FFF',
-    }
+    "& .MuiTab-textColorPrimary.Mui-selected": {
+      color: theme.mode === "light" ? "Primary" : "#FFF",
+    },
   },
   avatar: {
     width: "100%",
@@ -79,8 +80,8 @@ const useStyles = makeStyles((theme) => ({
     padding: "0 8px",
     minHeight: "48px",
     [theme.breakpoints.down("sm")]: {
-      height: "48px"
-    }
+      height: "48px",
+    },
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -97,8 +98,8 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     [theme.breakpoints.down("sm")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   menuButton: {
     marginRight: 36,
@@ -120,9 +121,9 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     [theme.breakpoints.down("sm")]: {
-      width: "100%"
+      width: "100%",
     },
-    ...theme.scrollbarStylesSoft
+    ...theme.scrollbarStylesSoft,
   },
   drawerPaperClose: {
     overflowX: "hidden",
@@ -135,8 +136,8 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9),
     },
     [theme.breakpoints.down("sm")]: {
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
   appBarSpacer: {
     minHeight: "48px",
@@ -144,7 +145,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flex: 1,
     overflow: "auto",
-
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -154,7 +154,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     display: "flex",
     overflow: "auto",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   containerWithScroll: {
     flex: 1,
@@ -174,7 +174,7 @@ const useStyles = makeStyles((theme) => ({
       height: "80%",
       maxWidth: 180,
     },
-    logo: theme.logo
+    logo: theme.logo,
   },
 }));
 
@@ -200,7 +200,6 @@ const LoggedInLayout = ({ children, themeToggle }) => {
   // Languages
   const [anchorElLanguage, setAnchorElLanguage] = useState(null);
   const [menuLanguageOpen, setMenuLanguageOpen] = useState(false);
-
 
   //################### CODIGOS DE TESTE #########################################
   // useEffect(() => {
@@ -297,20 +296,20 @@ const LoggedInLayout = ({ children, themeToggle }) => {
     setMenuOpen(true);
   };
 
-  const handlemenuLanguage = ( event ) => {
+  const handlemenuLanguage = (event) => {
     setAnchorElLanguage(event.currentTarget);
-    setMenuLanguageOpen( true );
-  }
+    setMenuLanguageOpen(true);
+  };
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
     setMenuOpen(false);
   };
 
-  const handleCloseMenuLanguage = (  ) => {
+  const handleCloseMenuLanguage = () => {
     setAnchorElLanguage(null);
     setMenuLanguageOpen(false);
-  }
+  };
 
   const handleOpenUserModal = () => {
     setUserModalOpen(true);
@@ -330,7 +329,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
 
   const handleRefreshPage = () => {
     window.location.reload(false);
-  }
+  };
 
   const handleMenuItemClick = () => {
     const { innerWidth: width } = window;
@@ -341,7 +340,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
 
   const toggleColorMode = () => {
     colorMode.toggleColorMode();
-  }
+  };
 
   if (loading) {
     return <BackdropLoading />;
@@ -404,17 +403,25 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             className={classes.title}
           >
             {/* {greaterThenSm && user?.profile === "admin" && getDateAndDifDays(user?.company?.dueDate).difData < 7 ? ( */}
-            {greaterThenSm && user?.profile === "admin" && user?.company?.dueDate ? (
+            {greaterThenSm &&
+            user?.profile === "admin" &&
+            user?.company?.dueDate ? (
               <>
-                {i18n.t("mainDrawer.appBar.greeting.hello")} <b>{user.name}</b>, {i18n.t("mainDrawer.appBar.greeting.welcome")} <b>{user?.company?.name}</b>! ({i18n.t("mainDrawer.appBar.greeting.active")} {dateToClient(user?.company?.dueDate)})
+                {i18n.t("mainDrawer.appBar.greeting.hello")} <b>{user.name}</b>,{" "}
+                {i18n.t("mainDrawer.appBar.greeting.welcome")}{" "}
+                <b>{user?.company?.name}</b>! (
+                {i18n.t("mainDrawer.appBar.greeting.active")}{" "}
+                {dateToClient(user?.company?.dueDate)})
               </>
             ) : (
               <>
-                {i18n.t("mainDrawer.appBar.greeting.hello")} <b>{user.name}</b>, {i18n.t("mainDrawer.appBar.greeting.welcome")} <b>{user?.company?.name}</b>!
+                {i18n.t("mainDrawer.appBar.greeting.hello")} <b>{user.name}</b>,{" "}
+                {i18n.t("mainDrawer.appBar.greeting.welcome")}{" "}
+                <b>{user?.company?.name}</b>!
               </>
             )}
           </Typography>
-          
+
           <div>
             <IconButton edge="start">
               <LanguageOutlined
@@ -423,7 +430,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
                 aria-haspopup="true"
                 onClick={handlemenuLanguage}
                 variant="contained"
-                style={{ color: "white",marginRight:10 }}
+                style={{ color: "white", marginRight: 10 }}
               />
             </IconButton>
             <Menu
@@ -445,16 +452,17 @@ const LoggedInLayout = ({ children, themeToggle }) => {
                 <LanguageControl />
               </MenuItem>
             </Menu>
-          </div>          
+          </div>
 
           <IconButton edge="start" onClick={toggleColorMode}>
-            {theme.mode === 'dark' ? <Brightness7Icon style={{ color: "white" }} /> : <Brightness4Icon style={{ color: "white" }} />}
+            {theme.mode === "dark" ? (
+              <Brightness7Icon style={{ color: "white" }} />
+            ) : (
+              <Brightness4Icon style={{ color: "white" }} />
+            )}
           </IconButton>
 
-          <NotificationsVolume
-            setVolume={setVolume}
-            volume={volume}
-          />
+          <NotificationsVolume setVolume={setVolume} volume={volume} />
 
           <IconButton
             onClick={handleRefreshPage}

@@ -20,10 +20,10 @@ import Container from "@material-ui/core/Container";
 import api from "../../services/api";
 import { i18n } from "../../translate/i18n";
 import moment from "moment";
-import logo from "../../assets/logo.png";
-import { toast } from 'react-toastify'; 
-import toastError from '../../errors/toastError';
-import 'react-toastify/dist/ReactToastify.css';
+import logo from "../../assets/logo.svg";
+import { toast } from "react-toastify";
+import toastError from "../../errors/toastError";
+import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -103,24 +103,24 @@ const ForgetPassword = () => {
   const [user] = useState(initialState);
   const dueDate = moment().add(3, "day").format();
 
-const handleSendEmail = async (values) => {
-  const email = values.email;
-  try {
-    const response = await api.post(
-      `${process.env.REACT_APP_BACKEND_URL}/forgetpassword/${email}`
-    );
-    console.log("API Response:", response.data);
+  const handleSendEmail = async (values) => {
+    const email = values.email;
+    try {
+      const response = await api.post(
+        `${process.env.REACT_APP_BACKEND_URL}/forgetpassword/${email}`
+      );
+      console.log("API Response:", response.data);
 
-    if (response.data.status === 404) {
-      toast.error(i18n.t("resetPassword.toasts.emailNotFound"));
-    } else {
-      toast.success(i18n.t("resetPassword.toasts.emailSent"));
+      if (response.data.status === 404) {
+        toast.error(i18n.t("resetPassword.toasts.emailNotFound"));
+      } else {
+        toast.success(i18n.t("resetPassword.toasts.emailSent"));
+      }
+    } catch (err) {
+      console.log("API Error:", err);
+      toastError(err);
     }
-  } catch (err) {
-    console.log("API Error:", err);
-    toastError(err);
-  }
-};
+  };
 
   const handleResetPassword = async (values) => {
     const email = values.email;
@@ -144,7 +144,9 @@ const handleSendEmail = async (values) => {
 
   const isResetPasswordButtonClicked = showResetPasswordButton;
   const UserSchema = Yup.object().shape({
-    email: Yup.string().email(i18n.t("resetPassword.formErrors.email.invalid")).required(i18n.t("resetPassword.formErrors.email.required")),
+    email: Yup.string()
+      .email(i18n.t("resetPassword.formErrors.email.invalid"))
+      .required(i18n.t("resetPassword.formErrors.email.required")),
     newPassword: isResetPasswordButtonClicked
       ? Yup.string()
           .required(i18n.t("resetPassword.formErrors.newPassword.required"))
@@ -156,7 +158,10 @@ const handleSendEmail = async (values) => {
     confirmPassword: Yup.string().when("newPassword", {
       is: (newPassword) => isResetPasswordButtonClicked && newPassword,
       then: Yup.string()
-        .oneOf([Yup.ref("newPassword"), null], i18n.t("resetPassword.formErrors.confirmPassword.matches"))
+        .oneOf(
+          [Yup.ref("newPassword"), null],
+          i18n.t("resetPassword.formErrors.confirmPassword.matches")
+        )
         .required(i18n.t("resetPassword.formErrors.confirmPassword.required")),
       otherwise: Yup.string(), // Sem validação se não for redefinição de senha
     }),
@@ -241,20 +246,15 @@ const handleSendEmail = async (values) => {
                           label={i18n.t("resetPassword.form.newPassword")}
                           name="newPassword"
                           error={
-                            touched.newPassword &&
-                            Boolean(errors.newPassword)
+                            touched.newPassword && Boolean(errors.newPassword)
                           }
-                          helperText={
-                            touched.newPassword && errors.newPassword
-                          }
+                          helperText={touched.newPassword && errors.newPassword}
                           autoComplete="off"
                           required
                           InputProps={{
                             endAdornment: (
                               <InputAdornment position="end">
-                                <IconButton
-                                  onClick={togglePasswordVisibility}
-                                >
+                                <IconButton onClick={togglePasswordVisibility}>
                                   {showPassword ? (
                                     <VisibilityIcon />
                                   ) : (
@@ -280,8 +280,7 @@ const handleSendEmail = async (values) => {
                             Boolean(errors.confirmPassword)
                           }
                           helperText={
-                            touched.confirmPassword &&
-                            errors.confirmPassword
+                            touched.confirmPassword && errors.confirmPassword
                           }
                           autoComplete="off"
                           required
@@ -323,7 +322,7 @@ const handleSendEmail = async (values) => {
                     color="primary"
                     className={classes.submit}
                   >
-{                    i18n.t("resetPassword.buttons.submitEmail")}
+                    {i18n.t("resetPassword.buttons.submitEmail")}
                   </Button>
                 )}
                 <Grid container justifyContent="flex-end">
