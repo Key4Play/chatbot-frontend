@@ -325,7 +325,7 @@ const ForgetPassword = () => {
                     {i18n.t("resetPassword.buttons.submitEmail")}
                   </Button>
                 )}
-                {/* <Grid container justifyContent="flex-end">
+                <Grid container justifyContent="flex-end">
                   <Grid item>
                     <Link
                       href="#"
@@ -336,7 +336,7 @@ const ForgetPassword = () => {
                       {i18n.t("resetPassword.buttons.back")}
                     </Link>
                   </Grid>
-                </Grid> */}
+                </Grid>
                 {error && (
                   <Typography variant="body2" color="error">
                     {error}
